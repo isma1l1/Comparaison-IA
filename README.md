@@ -8,7 +8,7 @@ Nous avons établi une liste d'indicateurs à mesurer dans les réponses des mod
 2. Nombre de mots
 3. Densité d'informations pertinentes
 4. Note (cf Critères de justesse)
-5. Similarité Syntaxique
+
 
 
 Ces différents critères pourront ultérieurement être combinés dans un score global attribué à l'IA et ses paramètres, permettant une lecture plus rapide des résultats.
@@ -69,24 +69,20 @@ Il s'agit simplement d'une note attribuée manuellement suite à l'évaluation d
 /!\ Nous n'avons pas eu le temps de noter tous les problèmes. Pour éviter de biaiser notre programme, nous ne le faisons donc tourner que sur les problèmes 1 à 11
 
 
-#### Similarité syntaxique
-La similarité syntaxique est calculée à partir du modèle développé dans le dossier _Evaluation\_automatisée_. Il s'agit d'un indice calculé par une IA entraînée sur une grande base de données de textes d'électronique. Elle mesure la proximité entre la réponse de l'IA et les formules des critères de justesse. 
-Tous les résultats de ces calculs ont été rassemblés dans le tableau _Resultats\_Benchmark.xlsx_, qui est ensuite lu par notre programme.
 
 
 #### Score
 Le score est un indice que nous avons défini par la formule suivante : 
-$$Score = \frac{D^\alpha * N^\beta * S^\gamma}{exp(\delta * max(\frac{L}{\eta}-1,0))}$$
+$$Score = \frac{D^\alpha * N^\beta}{exp(\delta * max(\frac{L}{\eta}-1,0))}$$
 
 Où : 
 - D est la densité d'information moyenne sur toutes les réponses dans un contexte (IA, langue, mode d'utilisation)
 - N la note moyenne (ramenée entre 0 et 1)
-- S la similarité syntaxique moyenne (ramenée entre 0 et 1)
 - L la longueur des réponses moyenne (en nombre de mots)
 
 
 Les autres grandeurs sont des paramètres du modèle, dont la valeur peut être changée au début de _{Evaluation_IA.py}_.
-On a pris pour l'étude : $\alpha = 0.25, \beta = 1.5, \gamma = 1, \delta = 0.5, \eta = 250$
+On a pris pour l'étude : $\alpha = 0.25, \beta = 1.5, \delta = 0.5, \eta = 250$
 
 Explication : 
 D, N et S sont des grandeurs que l'on cherche à maximiser, d'où leur présence au numérateur. $\alpha, \beta, \gamma$ peuvent être interprétés comme le poids associé à chacune des grandeurs. 
