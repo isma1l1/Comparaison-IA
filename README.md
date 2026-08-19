@@ -2,7 +2,7 @@
 
 
 ### 1) Objectifs
-Dans cette partie, nous cherchons à évaluer la capacité de différents modèles d'IA à répondre efficacement à des problèmes classiques d'électronique analogique, avec des paramètres différents. 
+Nous cherchons à évaluer la capacité de différents modèles d'IA à répondre efficacement à des problèmes classiques d'électronique analogique, avec des paramètres différents. 
 Nous avons établi une liste d'indicateurs à mesurer dans les réponses des modèles, afin de caractériser la justesse de leurs réponses et l'efficacité avec laquelle ils la délivrent.
 1. Longueur de la réponse (en nombre de caractères)
 2. Nombre de mots
