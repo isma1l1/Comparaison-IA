@@ -1,0 +1,45 @@
+* =========================
+* IDEAL AM RADIO SYSTEM
+* =========================
+
+VIN IN 0 AC 1
+
+* -------------------------
+* ANTENNA (LC TANK)
+* -------------------------
+RANT IN N1 1k
+L1 N1 N2 300u
+C1 N2 0 150p
+
+* OUTPUT = N2 (ANT_OUT)
+
+* -------------------------
+* RF AMPLIFIER (IDEAL BJT)
+* -------------------------
+Q1 N3 N2 0 QIDEAL
+RC N3 VCC 4.7k
+RB N2 VCC 100k
+VCC VCC 0 DC 9
+
+* OUTPUT = N3 (RF_OUT)
+
+* -------------------------
+* ENVELOPE DETECTOR
+* -------------------------
+D1 N3 N4 DIDEAL
+C2 N4 0 1u
+R2 N4 N5 10k
+
+* OUTPUT = N5 (AUDIO_OUT)
+
+* -------------------------
+* AUDIO OUTPUT (IDEAL GAIN)
+* -------------------------
+E1 OUT 0 N5 0 20
+RLOAD OUT 0 32
+
+.model QIDEAL NPN (BF=1000 VAF=100)
+.model DIDEAL D (IS=1e-12 N=1)
+
+.ac dec 100 100k 2Meg
+.end

@@ -1,0 +1,13 @@
+* ANTENNA IDEAL - MODULE
+
+VIN IN 0 AC 1
+
+RANT IN N1 1k
+L1 N1 N2 300u
+C1 N2 0 150p
+
+* OUTPUT node = N2
+* connect next stage here
+
+.ac dec 100 100k 2Meg
+.end

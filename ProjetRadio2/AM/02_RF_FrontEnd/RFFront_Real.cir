@@ -1,0 +1,20 @@
+* RF FRONT-END REAL MODULE
+
+* INPUT from antenna
+VIN IN 0 AC 1
+
+RIN IN NB 1k
+
+Q1 NC NB 0 2N3904
+
+RC NC VCC 4.7k
+RE 0 NE 1k
+RB NB VCC 100k
+
+VCC VCC 0 DC 9
+
+COUT NC OUT 47n
+
+.model 2N3904 NPN (BF=200 IS=1e-14 VAF=100)
+.ac dec 100 100k 2Meg
+.end

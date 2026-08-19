@@ -1,0 +1,21 @@
+* RF FRONT-END IDEAL MODULE
+
+* INPUT from antenna
+VIN IN 0 AC 1
+
+RIN IN NB 1k
+
+Q1 NC NB 0 QIDEAL
+
+RC NC VCC 4.7k
+RB NB VCC 100k
+
+VCC VCC 0 DC 9
+
+COUT NC OUT 47n
+
+* OUTPUT = OUT
+
+.model QIDEAL NPN (BF=1000 VAF=100)
+.ac dec 100 100k 2Meg
+.end

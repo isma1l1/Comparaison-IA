@@ -1,0 +1,46 @@
+* =====================================
+* LTSPICE SAFE SIGNAL CHAIN (BASELINE)
+* =====================================
+
+**********************
+* INPUT (simple AM-like signal, SAFE)
+**********************
+V1 IN 0 SINE(0 0.5 50k)
+
+V2 MOD 0 SINE(0 0.5 1k)
+
+B1 IN2 0 V = V(IN) * (1 + 0.6*V(MOD))
+
+**********************
+* DETECTOR
+**********************
+D1 IN2 DET 1N4148
+R1 DET 0 100k
+C1 DET 0 1n
+
+**********************
+* AMPLIFIER (SAFE BIAS)
+**********************
+VCC VCC 0 9
+
+R2 VCC B 100k
+R3 B 0 22k
+
+Q1 B B E 2N3904
+
+RC VCC OUT 4.7k
+RE E 0 1k
+
+C2 OUT LOAD 10u
+RLOAD LOAD 0 32
+
+**********************
+* MODELS
+**********************
+.model 2N3904 NPN
+.model 1N4148 D
+
+**********************
+* SIMULATION
+**********************
+.tran 0 50m

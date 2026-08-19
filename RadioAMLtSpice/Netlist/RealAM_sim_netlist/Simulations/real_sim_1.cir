@@ -1,0 +1,46 @@
+```spice
+* AM Radio Receiver Simulation (693 kHz BBC 5 Live)
+* --- Power Supply ---
+Vcc VCC 0 9V
+
+* --- RF Antenna / Signal Source ---
+* B1 creates the AM modulated signal: 693kHz carrier, 1kHz audio tone, 10mV amplitude
+B1 IN 0 V=(1+0.8*sin(2*pi*1k*time))*sin(2*pi*693k*time)*10m
+R_ant IN RF_IN 50 
+
+* --- LC Tuning Tank (Added for simulation) ---
+* Tunes to approx 693 kHz
+L1 RF_IN 0 220u
+C_tune RF_IN 0 240p
+
+* --- RF Amplifier Stage (Common Emitter) ---
+C_rf_in RF_IN RF_B 10n
+R_rf_b RF_C RF_B 100k  ; Collector-feedback bias
+R_rf_c VCC RF_C 4.7k
+R_rf_e RF_E 0 1k
+C_rf_e RF_E 0 100n     ; Emitter bypass for high AC gain
+Q1 RF_C RF_B RF_E 2N3904
+
+* --- AM Detector Stage ---
+* Directly coupled to utilize the RF stage's DC offset for pre-biasing
+D1 RF_C DET_OUT 1N4148
+R_det DET_OUT 0 10k
+C_det DET_OUT 0 10n    ; 10nF perfectly balances the RC formula
+
+* --- Audio Amplifier Stage ---
+C1 DET_OUT AF_B 10u
+R_af_b AF_C AF_B 10k   ; Collector-feedback bias
+R_af_c VCC AF_C 4.7k
+R_af_e AF_E2 0 1k
+Q2 AF_C AF_B AF_E2 2N3904
+C2 AF_C OUT 10u
+R_load OUT 0 32        ; 32-ohm Headphones
+
+* --- Transistor & Diode Models ---
+.model 2N3904 NPN(IS=1E-14 VAF=100 BF=300 IKF=0.4 XTB=1.5 BR=4 CJC=4p CJE=8p RB=20 RC=0.1 RE=0.1 TR=250p TF=350p ITF=1 VTF=2 XTF=3 VCEO=40)
+.model 1N4148 D(Is=2.52n Rs=.568 N=1.752 Cjo=4p M=.4 tt=20n Iave=200m Vpk=75)
+
+* --- Simulation Setup ---
+.tran 0 5m 0 100n
+.end
+```
