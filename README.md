@@ -163,4 +163,4 @@ Grâce à cette partie du projet, on voit qu'il est possible de mesurer les perf
 L'interprétation des performances globales reste conditionnée par trois verrous méthodologiques :
 
 * **Complexité multimodale :** La retranscription et le traitement des schémas de circuits électroniques par les modèles introduisent une rupture de symétrie technique par rapport aux requêtes purement textuelles, compliquant leur évaluation standardisée.
-* **Variabilité stochastique :** La nature non déterministe des LLM induit une fluctuation des réponses pour un prompt identique, ce qui limite la reproductibilité stricte des métriques de longueur et de similarité syntaxique.
+* **Variabilité stochastique :** La nature non déterministe des LLM induit une fluctuation des réponses pour un prompt identique, ce qui limite la reproductibilité stricte des métriques de longueur.
