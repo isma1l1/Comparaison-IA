@@ -1,5 +1,5 @@
-## Partie II : Evaluation de modèles d'IA
-Tous les fichiers et dossiers de cette partie se trouvent dans le dossier _AI Evaluation_
+##Evaluation de modèles d'IA
+
 
 ### 1) Objectifs
 Dans cette partie, nous cherchons à évaluer la capacité de différents modèles d'IA à répondre efficacement à des problèmes classiques d'électronique analogique, avec des paramètres différents. 
