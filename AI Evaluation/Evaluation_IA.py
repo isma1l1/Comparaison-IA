@@ -10,7 +10,7 @@ from pathlib import Path
 # VARIABLES GLOBALES
 # ----------------------------
 global Nb_crit
-Nb_crit = 5
+Nb_crit = 4
 global Criteres
 Criteres = [{"Nom" : "Longueur (en caractères)",
                   "Objectif" : "Minimiser",
@@ -22,9 +22,6 @@ Criteres = [{"Nom" : "Longueur (en caractères)",
                   "Objectif" : "Maximiser",
                   "Fonction" : interest_density},
                  {"Nom" : "Note",
-                  "Objectif" : "Maximiser",
-                  "Fonction" : pas_de_fonction_associee},
-                 {"Nom" : "Similarité syntaxique",
                   "Objectif" : "Maximiser",
                   "Fonction" : pas_de_fonction_associee},
                  {"Nom" : "Score global",
@@ -55,11 +52,10 @@ langues = ["FR","EN"]
 # ----------
 # Constantes du calcul du score
 # ----------
-global alpha, beta, gamma, delta, eta
+global alpha, beta, delta, eta
 
 alpha = 0.25 # Densité
 beta = 1.5 # Note
-gamma = 1 # Similarité
 delta = 0.5 # Coef influence réponse
 
 # Longueur des réponses attendue (en nombre de mots)
@@ -165,7 +161,6 @@ if __name__ == "__main__":
         
         # Copie des notes des pb dans le tableau depuis le fichier "Notes.xlsx"
         bilan_sheet.copie_notes(wb)
-        bilan_sheet.copie_similarite(wb)
         
         bilan_sheet.save(wb,"Resultat_etude.xlsx")
         print("Traitement terminé")
