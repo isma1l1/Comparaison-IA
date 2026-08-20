@@ -5,7 +5,7 @@ from openpyxl.styles import PatternFill, Border, Side
 from openpyxl.utils import get_column_letter
 
 
-from Evaluation_IA import Liste_IA, Nb_pb, Nb_crit, Criteres, categories_names, langues, alpha, beta, gamma, delta, eta
+from Evaluation_IA import Liste_IA, Nb_pb, Nb_crit, Criteres, categories_names, langues, alpha, beta, delta, eta
 
 
 def write_line(wb,wordsheet,l_values,start_row=1,start_col=1):
@@ -106,7 +106,7 @@ def initialisation_etude():
             ws_main[f'{get_column_letter(2+(Nb_crit_with_tot+3)*cat)}{2+l*(nb_ia+5)}'].font = oxl.styles.Font(size = 12, bold = True)
 
             write_line(wb,"Comparatif",
-                        ["Nom IA","Longueur de réponse","Nombre de mots","Densité d'information utile","Note de réussite","Similarité syntaxique","Score"],
+                        ["Nom IA","Longueur de réponse","Nombre de mots","Densité d'information utile","Note de réussite","Score"],
                         start_row=3+l*(nb_ia+5),
                         start_col=1+cat*(3+Nb_crit_with_tot))
     
@@ -160,7 +160,7 @@ def initialisation_etude():
                 ws[f'{get_column_letter(2+(Nb_crit+3)*cat)}{2+l*(Nb_pb + 5)}'].alignment = oxl.styles.Alignment(horizontal = 'center')
                 ws[f'{get_column_letter(2+(Nb_crit+3)*cat)}{2+l*(Nb_pb + 5)}'].font = oxl.styles.Font(size = 12, bold = True)
                 write_line(wb,Liste_IA[i],
-                        ["N° Problème","Longueur de réponse","Nombre de mots","Densité d'information utile","Note de réussite","Similarité syntaxique"],
+                        ["N° Problème","Longueur de réponse","Nombre de mots","Densité d'information utile","Note de réussite"],
                         start_row=3+l*(Nb_pb+5),
                         start_col=1+cat*(3+Nb_crit))
             
@@ -359,29 +359,3 @@ def copie_notes(wb):
                     
 
 
-def copie_similarite(wb):
-    """
-    Description : 
-    Copie l'indice de similarité de chaque problème de l'étude, stockées dans le 
-    sheet "Resultats_Benchmark.xlsx", dans le tableau récapitulatif de l'étude
-        
-    Entrées : 
-    - wb : workbook d'étude
-
-    
-    Sorties : Aucune
-    """
-    # Ouverture du tableau des notes, en n'utilisant que les valeurs (sinon on copie les formules SUM(...))
-    wb_notes = oxl.load_workbook("Resultats_Benchmark.xlsx", data_only=True)
-
-    # liste permettant de corriger le changement d'ordre des critères 
-    permut_cat = [2,0,1]
-    permut_langue = [1,0]
-    
-    # Copie des notes pour chaque problème dans chaque configuration
-    for ia in Liste_IA:
-        for l in range(len(langues)):
-            for cat in range(len(categories_names)):
-                
-                for i in range(Nb_pb):
-                    wb[ia].cell(4+i+l*(Nb_pb+5),6+cat*(Nb_crit+3)).value = wb_notes[ia][2+i*6+permut_langue[l]+2*permut_cat[cat]][3].value
