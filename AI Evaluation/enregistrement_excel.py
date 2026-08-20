@@ -71,7 +71,7 @@ def initialisation_etude():
     - Renvoie le workbook associé au tableur
     """
     global Liste_IA, Nb_pb, Criteres, langues, Nb_crit
-    global alpha, beta, gamma, delta, eta
+    global alpha, beta, delta, eta
 
     nb_ia = len(Liste_IA)
     
@@ -186,18 +186,19 @@ def initialisation_etude():
         
             # Ajout de la ligne bilan de l'IA en cours dans la page principale
             for cat in range(len(categories_names)):
-                write_line(wb,"Comparatif",
-                                    [Liste_IA[i],
-                                    f"=AVERAGE({Liste_IA[i]}!{get_column_letter(2+(Nb_crit+3)*cat)}{4+l*(Nb_pb + 5)}:{get_column_letter(2+(Nb_crit+3)*cat)}{Nb_pb+3+l*(Nb_pb + 5)})",
-                                    f"=AVERAGE({Liste_IA[i]}!{get_column_letter(2+(Nb_crit+3)*cat+1)}{4+l*(Nb_pb + 5)}:{get_column_letter(2+(Nb_crit+3)*cat+1)}{Nb_pb+3+l*(Nb_pb + 5)})",
-                                    f"=AVERAGE({Liste_IA[i]}!{get_column_letter(2+(Nb_crit+3)*cat+2)}{4+l*(Nb_pb + 5)}:{get_column_letter(2+(Nb_crit+3)*cat+2)}{Nb_pb+3+l*(Nb_pb + 5)})",
-                                    f"=AVERAGE({Liste_IA[i]}!{get_column_letter(2+(Nb_crit+3)*cat+3)}{4+l*(Nb_pb + 5)}:{get_column_letter(2+(Nb_crit+3)*cat+3)}{Nb_pb+3+l*(Nb_pb + 5)})",
-                                    f"=AVERAGE({Liste_IA[i]}!{get_column_letter(2+(Nb_crit+3)*cat+4)}{4+l*(Nb_pb + 5)}:{get_column_letter(2+(Nb_crit+3)*cat+4)}{Nb_pb+3+l*(Nb_pb + 5)})"],
-                            start_row=4+i+l*(nb_ia+5),
-                            start_col=1+(Nb_crit_with_tot+3)*cat)
-
+                write_line(wb, "Comparatif",
+    [
+        Liste_IA[i],
+        f"=AVERAGE('{Liste_IA[i]}'!{get_column_letter(2+(Nb_crit+3)*cat)}{4+l*(Nb_pb + 5)}:{get_column_letter(2+(Nb_crit+3)*cat)}{Nb_pb+3+l*(Nb_pb + 5)})",
+        f"=AVERAGE('{Liste_IA[i]}'!{get_column_letter(2+(Nb_crit+3)*cat+1)}{4+l*(Nb_pb + 5)}:{get_column_letter(2+(Nb_crit+3)*cat+1)}{Nb_pb+3+l*(Nb_pb + 5)})",
+        f"=AVERAGE('{Liste_IA[i]}'!{get_column_letter(2+(Nb_crit+3)*cat+2)}{4+l*(Nb_pb + 5)}:{get_column_letter(2+(Nb_crit+3)*cat+2)}{Nb_pb+3+l*(Nb_pb + 5)})",
+        f"=AVERAGE('{Liste_IA[i]}'!{get_column_letter(2+(Nb_crit+3)*cat+3)}{4+l*(Nb_pb + 5)}:{get_column_letter(2+(Nb_crit+3)*cat+3)}{Nb_pb+3+l*(Nb_pb + 5)})"
+    ],
+    start_row=4+i+l*(nb_ia+5),
+    start_col=1+(Nb_crit_with_tot+3)*cat
+)
         for col in ws.columns:
-            col_letter = col[3].column_letter
+            col_letter = col[0].column_letter
             ws.column_dimensions[col_letter].width = taille_col_ia    
 
 
@@ -212,14 +213,21 @@ def initialisation_etude():
             ]
 
     # Liste des cases score de la page Comparatif
-    cases_score_deb = translation(cases_long_carac_deb,5,0) 
-    cases_score = cases_score_deb + translation(cases_score_deb,0,1) + translation(cases_score_deb,0,2)
-
+    cases_score_deb = translation(cases_long_carac_deb,4,0) 
+    cases_score = [
+    (c[0], c[1] + k)
+    for c in cases_score_deb
+    for k in range(nb_ia)
+]
 
     # Ajout de la formule de calcul du score
     for c in cases_score:
-        ws_main[f'{get_column_letter(c[0])}{c[1]}'] = f'= ({get_column_letter(c[0]-3)}{c[1]}^{alpha} * ({get_column_letter(c[0]-2)}{c[1]}/10)^{beta} *({get_column_letter(c[0]-1)}{c[1]}/10)^{gamma}) /(EXP({delta} * MAX({get_column_letter(c[0]-4)}{c[1]}/{eta}-1,0)))'
-    
+        ws_main[f'{get_column_letter(c[0])}{c[1]}'] = (
+          f'= ({get_column_letter(c[0]-2)}{c[1]}^{alpha} *'
+          f' ({get_column_letter(c[0]-1)}{c[1]}/10)^{beta} ) /'
+          f' (EXP({delta} *'
+          f' MAX({get_column_letter(c[0]-3)}{c[1]}/{eta}-1,0)))'
+      )
     
     # ---------
     # Coloration des cases de la page principale 
